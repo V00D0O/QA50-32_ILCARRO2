@@ -5,6 +5,7 @@ import manager.ApplicationManager;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import pages.HomePage;
 import pages.PopUpPage;
 import pages.RegistrationPage;
@@ -15,7 +16,7 @@ import static utils.UserFactory.*;
 
 public class RegistrationTests extends ApplicationManager {
     RegistrationPage registrationPage;
-
+SoftAssert softAssert = new SoftAssert();
     @BeforeMethod
     public void goToRegistrationPage() {
         new HomePage(getDriver()).clickBtnSignUp();
@@ -43,5 +44,36 @@ public class RegistrationTests extends ApplicationManager {
         registrationPage.clickCheckBoxWithActions();
         registrationPage.clickBtnYalla();
         Assert.assertTrue(new PopUpPage(getDriver()).isTextInPopUpMessagePresent("You are logged in success"));
+    }
+    @Test
+    public void registrationNegativetest_UserAlreadyExists(){
+        User user = User.builder().firstName("ftrue").lastName("dor").email("sveta548@smd.com").password("Password123#").build();
+        registrationPage.typeRegistrationForm(user);
+        registrationPage.clickCheckBoxWithActions();
+        registrationPage.clickBtnYalla();
+        Assert.assertTrue(new PopUpPage(getDriver()).isTextInPopUpMessagePresent("User already exists"));
+
+    }
+    @Test
+    public void registrationNegativeTest_WithSpaceInFirstName(){
+        User user = User.builder().firstName(" ").lastName("dor").email("sveta548@smd.com").password("Password123#").build();
+        registrationPage.typeRegistrationForm(user);
+        registrationPage.clickCheckBoxWithActions();
+        registrationPage.clickBtnYalla();
+        Assert.assertTrue(new PopUpPage(getDriver()).isTextInPopUpMessagePresent("must not be blank"));
+
+    }
+    @Test
+    public void registrationNegativeTest_WithAllEmptyFields(){
+        User user = User.builder().firstName("").lastName("").email("").password("").build();
+        registrationPage.typeRegistrationForm(user);
+        registrationPage.clickCheckBoxWithActions();
+        registrationPage.clickBtnYalla();
+        softAssert.assertTrue(registrationPage.isTextInErrorPresent("Name is required"), "validate error message Name is required");
+        softAssert.assertTrue(registrationPage.isTextInErrorPresent("Last name is required"), "validate error message last Name is required");
+        softAssert.assertTrue(registrationPage.isTextInErrorPresent("Email is required"), "validate error message Email is required");
+        softAssert.assertTrue(registrationPage.isTextInErrorPresent("Password is required"), "validate error message Password is required");
+        softAssert.assertAll();
+
     }
 }
