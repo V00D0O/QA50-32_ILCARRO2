@@ -25,7 +25,6 @@ public class LoginPage extends BasePage {
 
     public void typeLoginForm(User user) {
         inputEmail.sendKeys(user.getEmail());
-
         inputPassword.sendKeys(user.getPassword());
     }
 

@@ -35,10 +35,11 @@ public class RegistrationPage extends BasePage {
         fieldLastName.sendKeys(user.getLastName());
         fieldEmail.sendKeys(user.getEmail());
         fieldPassword.sendKeys(user.getPassword());
+        pause(1);
     }
+
     public void clickBtnYalla(){
         btnYalla.click();
-
     }
 
     public void clickCheckBox() {
@@ -60,20 +61,13 @@ public class RegistrationPage extends BasePage {
         }
     }
 
-//    public void clickCheckBoxWithActions() {
-//        int y = checkBoxAgree.getSize().getHeight();
-//        int x = checkBoxAgree.getSize().getWidth();
-//        System.out.println(x + "x" + y );
-//        Actions actions = new Actions(driver);
-//        actions.moveToElement(checkBoxAgree,5,10).click().perform();
-//    }
-
     public void clickCheckBoxWithActions() {
         int y = checkBoxAgree.getSize().getHeight();
         int x = checkBoxAgree.getSize().getWidth();
-        System.out.println(x + " x " + y );
+        System.out.println(x + " x " + y);
+
         Actions actions = new Actions(driver);
-        actions.moveToElement(checkBoxAgree,-x/2,-y/2).click().perform();
+        actions.moveToElement(checkBoxAgree, -(x/10*4), -y/2).click().perform();
     }
 
 }
