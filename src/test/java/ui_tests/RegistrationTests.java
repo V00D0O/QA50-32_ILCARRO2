@@ -28,10 +28,10 @@ public class RegistrationTests extends ApplicationManager {
     public void registrationPositiveTest() {
         int i = new Random().nextInt(1000);
         User user = User.builder()
-                .firstName("MAR")
-                .lastName("DOR")
+                .firstName("Mar")
+                .lastName("Dor")
                 .email("sssmkjiu" + i + "@defrt.bhy")
-                .password("Car116116!")
+                .password("Marat116!!")
                 .build();
         registrationPage.typeRegistrationForm(user);
         registrationPage.clickCheckBoxWithActions();
@@ -69,15 +69,15 @@ public class RegistrationTests extends ApplicationManager {
     public void registrationNegativeTest_WithSpaceInFirstName() {
         User user = User.builder()
                 .firstName(" ")
-                .lastName("dor")
-                .email("car116@gmail.com")
-                .password("Car116116!")
+                .lastName("Dor")
+                .email("marat11@mail.com")
+                .password("Marat116!")
                 .build();
         registrationPage.typeRegistrationForm(user);
         registrationPage.clickCheckBoxWithActions();
         registrationPage.clickBtnYalla();
         Assert.assertTrue(new PopUpPage(getDriver())
-                .isTextInPopUpMessagePresent("must not be blank"));
+                .isTextInPopUpMessagePresent("не должно быть пустым"));
     }
 
     @Test
